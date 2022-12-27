@@ -15,7 +15,7 @@ namespace CMS.Controllers
         {
             var dbHost = "localhost";
             var dbName = "cms";
-            var connectionString = "mongodb+srv://elizaveta72305:klop666@cluster0.fmr2xrs.mongodb.net/test";
+            var connectionString = "mongodb+srv://elizaveta72305:klop666@cluster0.fmr2xrs.mongodb.net/cms";
 
             var mongoUrl = MongoUrl.Create(connectionString);
             var mongoClient = new MongoClient(mongoUrl);
