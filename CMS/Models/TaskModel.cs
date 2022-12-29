@@ -1,17 +1,35 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using Enum;
+using Microsoft.OpenApi.Any;
+
 
 namespace CMS.Models
 {
+
+    namespace Enum
+    {
+        public enum TaskCategory
+        {
+            Frontend,
+            Angular,
+            React,
+            TypeScript,
+            JavaScript,
+            dotNet,
+            CSharp
+        }
+    }
+
     [Serializable, BsonIgnoreExtraElements]
 
     public class TaskModel
     {
         [BsonId, BsonRepresentation(BsonType.ObjectId)]
+        public string? TaskId { get; set; }
 
-        public string TaskId { get; set; }
-
-        public List<CategoryTasks> Category { get; set;}
+        [BsonElement("category")]
+        public string[] TaskCategory { get; set;}
 
         [BsonElement("name"), BsonRepresentation(BsonType.String)]
         public string Name { get; set; }

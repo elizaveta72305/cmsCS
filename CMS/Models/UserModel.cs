@@ -7,8 +7,7 @@ namespace CMS.Models
     public class User
     {
         [BsonId, BsonRepresentation(BsonType.ObjectId)] 
-
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
 
         [BsonElement("firstName"), BsonRepresentation(BsonType.String)]
         public string firstName { get; set; }

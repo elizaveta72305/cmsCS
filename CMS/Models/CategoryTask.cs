@@ -10,6 +10,5 @@ namespace CMS.Models
         [BsonElement("0"), BsonRepresentation(BsonType.String)]
         public string Category { get; set; } = null!;
 
-
     }
 }

@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using System;
 using System.Threading.Tasks;
 
 namespace CMS.Controllers;
 
     [Route("api/[controller]")]
+
     [ApiController]
     public class TaskController : ControllerBase
     {
@@ -22,7 +24,7 @@ namespace CMS.Controllers;
             var mongoUrl = MongoUrl.Create(connectionString);
             var mongoClient = new MongoClient(mongoUrl);
             var database = mongoClient.GetDatabase(mongoUrl.DatabaseName);
-            _taskCollection = database.GetCollection<TaskModel>("tasks");
+            _taskCollection = database.GetCollection<TaskModel>("taskStatic");
         }
 
         [HttpGet]
@@ -34,7 +36,15 @@ namespace CMS.Controllers;
         [HttpGet("{taskId}")]
         public async Task<ActionResult<TaskModel>> GetTaskById(string taskId)
         {
+        if (taskId == null)
+        {
+            return BadRequest();
+        } 
             var filterDefinition = Builders<TaskModel>.Filter.Eq(x => x.TaskId, taskId);
+        if (filterDefinition == null)
+        {
+            return NotFound();
+        }
             return await _taskCollection.Find(filterDefinition).SingleOrDefaultAsync();
         }
 
@@ -42,7 +52,11 @@ namespace CMS.Controllers;
 
         public async Task<ActionResult> CreateTask(TaskModel taskpost)
         {
-            await _taskCollection.InsertOneAsync(taskpost);
+        if (taskpost == null)
+        {
+            return BadRequest();
+        }
+        await _taskCollection.InsertOneAsync(taskpost);
             return Ok();
         }
 
