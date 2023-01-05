@@ -6,7 +6,7 @@ namespace CMS.Models
     [Serializable, BsonIgnoreExtraElements]
     public class User
     {
-        [BsonId, BsonRepresentation(BsonType.ObjectId)] 
+        [BsonId, BsonRepresentation(BsonType.ObjectId)]
         public string? UserId { get; set; }
 
         [BsonElement("firstName"), BsonRepresentation(BsonType.String)]
@@ -20,5 +20,9 @@ namespace CMS.Models
 
         [BsonElement("role"), BsonRepresentation(BsonType.String)]
         public string Role { get; set; }
+
+        [BsonElement("team"), BsonRepresentation(BsonType.String)]
+        public string Team { get; set; }
     }
 }
+

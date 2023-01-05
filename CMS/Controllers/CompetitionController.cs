@@ -11,6 +11,8 @@ namespace CMS.Controllers
     {
         private readonly IMongoCollection<Competition> _competitionCollection;
         private readonly IMongoCollection<TaskModel> _TaskCollection;
+        private readonly IMongoCollection<StatusModel> _statusCollection;
+
 
 
         public CompetitionController()
@@ -24,7 +26,7 @@ namespace CMS.Controllers
             var database = mongoClient.GetDatabase(mongoUrl.DatabaseName);
             _competitionCollection = database.GetCollection<Competition>("competition");
             _TaskCollection = database.GetCollection<TaskModel>("taskStatic");
-            
+            _statusCollection = database.GetCollection<StatusModel>("competitionStatus");
 
         }
 
@@ -46,8 +48,6 @@ namespace CMS.Controllers
         /// we should verify that all the taks that assigned to the competition is already exists in the tasks collections
         public async Task<ActionResult> CreateCompetition(Competition competition)
         {
-            //for (var currnetTask = 0; currnetTask <= competition.ListOfTasks.Length; currnetTask++)
-            //{
             foreach (var currnetTask in competition.ListOfTasks)
             {
                 string propertyNameInJsonCollection = "name";
@@ -59,12 +59,18 @@ namespace CMS.Controllers
                     return BadRequest();
                 }
             }
-            // check collection with name task - if name of task is lready exists
-            await _competitionCollection.InsertOneAsync(competition);
-            //const Object c = await _competitionToTaskCollection.Find(Builders<CompetitionToTasks>.Filter.AnyGte());
-
-           // await _competitionToTaskCollection.InsertOneAsync(competition); 
-
+            if(competition.Status is not null)
+            {
+                string propertyInJsonCollection = "status";
+                var filt = Builders<StatusModel>.Filter.Eq(propertyInJsonCollection, competition.Status);
+                var status = await (await _statusCollection.FindAsync(filt)).FirstOrDefaultAsync();
+                if (status == null)
+                {
+                    return BadRequest();
+                }
+            }
+                // check collection with name task - if name of task is lready exists
+                await _competitionCollection.InsertOneAsync(competition);
             return Ok();
         }
 
