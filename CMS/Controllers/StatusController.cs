@@ -1,12 +1,15 @@
 ﻿using CMS.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using MongoDB.Driver;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CMS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class StatusController : ControllerBase
     {
         private readonly IMongoCollection<StatusModel> _statusCollection;

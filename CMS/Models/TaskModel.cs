@@ -1,25 +1,10 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
-using Enum;
 using Microsoft.OpenApi.Any;
 
 
 namespace CMS.Models
 {
-
-    namespace Enum
-    {
-        public enum TaskCategory
-        {
-            Frontend,
-            Angular,
-            React,
-            TypeScript,
-            JavaScript,
-            dotNet,
-            CSharp
-        }
-    }
 
     [Serializable, BsonIgnoreExtraElements]
 
