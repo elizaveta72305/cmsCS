@@ -9,11 +9,11 @@ namespace CMS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class StatusController : ControllerBase
+	
+
+	public class StatusController : ControllerBase
     {
         private readonly IMongoCollection<StatusModel> _statusCollection;
-
         public StatusController()
         {
             var dbHost = "localhost";
@@ -27,7 +27,8 @@ namespace CMS.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<StatusModel>>> GetStatus()
+		[Authorize]
+		public async Task<ActionResult<IEnumerable<StatusModel>>> GetStatus()
         {
             return await _statusCollection.Find(Builders<StatusModel>.Filter.Empty).ToListAsync();
         }
