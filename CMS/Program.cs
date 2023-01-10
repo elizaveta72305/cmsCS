@@ -7,7 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 string allowSpecificOrigins = "_allowSpecificOrigins";
 
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, c =>
     {
@@ -28,16 +27,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Participant", policy => policy.RequireClaim("https://localhost:7192/claims/role", "Participant"));
+});
 
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy(allowSpecificOrigins,
 
-//        builder =>
-//        {
-//            builder.WithOrigins("https://localhost:7107", "http://localhost:5232");
-//        });
-//});
 
 builder.Services.AddCors(options =>
 {
