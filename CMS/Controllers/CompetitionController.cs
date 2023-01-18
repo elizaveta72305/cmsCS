@@ -1,7 +1,12 @@
 ﻿using CMS.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using MongoDB.Bson.IO;
 using MongoDB.Driver;
+using System;
+using System.Text.Json.Nodes;
+using System.Threading.Tasks;
 
 namespace CMS.Controllers
 {
@@ -12,8 +17,6 @@ namespace CMS.Controllers
         private readonly IMongoCollection<Competition> _competitionCollection;
         private readonly IMongoCollection<TaskModel> _TaskCollection;
         private readonly IMongoCollection<StatusModel> _statusCollection;
-
-
 
         public CompetitionController()
         {
@@ -27,7 +30,6 @@ namespace CMS.Controllers
             _competitionCollection = database.GetCollection<Competition>("competition");
             _TaskCollection = database.GetCollection<TaskModel>("taskStatic");
             _statusCollection = database.GetCollection<StatusModel>("competitionStatus");
-
         }
 
         [HttpGet]
@@ -36,8 +38,9 @@ namespace CMS.Controllers
             return await _competitionCollection.Find(Builders<Competition>.Filter.Empty).ToListAsync();
         }
 
+		
 
-        [HttpGet("{competitionId}")]
+		[HttpGet("{competitionId}")]
         public async Task<ActionResult<Competition>> GetCompetitionById(string competitionId)
         {
             var filterDefinition = Builders<Competition>.Filter.Eq(x => x.CompetitionId, competitionId);
@@ -73,6 +76,8 @@ namespace CMS.Controllers
                 await _competitionCollection.InsertOneAsync(competition);
             return Ok();
         }
+        //Add new task to competition
+        
 
         [HttpPut]
         public async Task<ActionResult> UpdateCompetition(Competition competition)
