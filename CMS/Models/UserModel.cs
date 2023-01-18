@@ -9,20 +9,22 @@ namespace CMS.Models
         [BsonId, BsonRepresentation(BsonType.ObjectId)]
         public string? UserId { get; set; }
 
-        [BsonElement("firstName"), BsonRepresentation(BsonType.String)]
+		[BsonElement("email"), BsonRepresentation(BsonType.String)]
+		public string Email { get; set; }
+
+		[BsonElement("firstName"), BsonRepresentation(BsonType.String)]
         public string firstName { get; set; }
 
         [BsonElement("lastName"), BsonRepresentation(BsonType.String)]
         public string lastName { get; set; }
 
-        [BsonElement("email"), BsonRepresentation(BsonType.String)]
-        public string Email { get; set; }
+		[BsonElement("teamName"), BsonRepresentation(BsonType.String)]
+		public string? TeamName { get; set; }
 
-        [BsonElement("role"), BsonRepresentation(BsonType.String)]
-        public string Role { get; set; }
+		[BsonElement("role")]
+        public string[]? Role { get; set; }
 
-        [BsonElement("team"), BsonRepresentation(BsonType.String)]
-        public string Team { get; set; }
+       
     }
 }
 

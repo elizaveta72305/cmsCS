@@ -9,7 +9,6 @@ namespace CMS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-	
 
 	public class StatusController : ControllerBase
     {

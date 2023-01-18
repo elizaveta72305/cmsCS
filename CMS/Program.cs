@@ -19,20 +19,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Participant", policy => policy.RequireClaim("https://localhost:7192/claims/role", "Participant"));
 });
-
-
 
 builder.Services.AddCors(options =>
 {

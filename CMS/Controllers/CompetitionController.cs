@@ -38,7 +38,9 @@ namespace CMS.Controllers
             return await _competitionCollection.Find(Builders<Competition>.Filter.Empty).ToListAsync();
         }
 
-        [HttpGet("{competitionId}")]
+		
+
+		[HttpGet("{competitionId}")]
         public async Task<ActionResult<Competition>> GetCompetitionById(string competitionId)
         {
             var filterDefinition = Builders<Competition>.Filter.Eq(x => x.CompetitionId, competitionId);

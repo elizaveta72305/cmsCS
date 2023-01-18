@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 
 namespace CMS.Controllers
 {
@@ -37,7 +38,14 @@ namespace CMS.Controllers
 
         }
 
-        [HttpPost]
+		[HttpGet("{email}")]
+		public async Task<ActionResult<User>> GetTeamByEmail(string email)
+		{
+			var filterDefinition = Builders<User>.Filter.Eq(x => x.Email, email);
+			return await _userCollection.Find(filterDefinition).SingleOrDefaultAsync();
+		}
+
+		[HttpPost]
 
         public async Task<ActionResult> Create(User user)
         {
